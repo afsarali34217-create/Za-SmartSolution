@@ -84,6 +84,7 @@ const standards={
 const cats=["Rice","Flour / Atta","Surf / Detergent","Tea","Masala / Spices","Slanty / Snacks","Papad","Nimko","Chocolate / Confectionery","Water Bottle Shrink Labels","Juice Shrink Labels"];
 const $=id=>document.getElementById(id), category=$("category"), standard=$("standard");
 category.innerHTML=cats.map(x=>'<option>'+x+'</option>').join("");
+document.querySelectorAll(".catalog .item").forEach(card=>{card.addEventListener("click",()=>{const title=card.querySelector("h3")?.textContent||"";const target=title.includes("Masala")?"Masala / Spices":title.includes("Tea")?"Tea":title.includes("Surf")?"Surf / Detergent":title.includes("Rice")?"Rice":title.includes("Nimko")?"Nimko":title.includes("Water")?"Water Bottle Shrink Labels":title.includes("Juice")?"Juice Bottle Shrink Labels":title.includes("Flour")?"Flour / Atta":null;if(target){category.value=target;fillStandards();standard.value="";update();document.getElementById("studio").scrollIntoView({behavior:"smooth"});}});});
 function fillStandards(){const list=standards[category.value]||[];standard.innerHTML='<option value="">Custom size — enter below</option>'+list.map((s,i)=>'<option value="'+i+'">'+s[0]+'</option>').join("");}
 category.addEventListener("change",fillStandards);fillStandards();
 standard.addEventListener("change",()=>{const s=(standards[category.value]||[])[Number(standard.value)];if(standard.value==="")return;$("length").value=s[1];$("width").value=s[2];$("gusset").value=s[3];if(category.value==="Flour / Atta")$("structure").value="PET + PE (2-layer)";update();});
